@@ -3,4 +3,3 @@ google-auth==2.14.1
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.4.1
 pandas==2.2.2
-flask==3.0.3
