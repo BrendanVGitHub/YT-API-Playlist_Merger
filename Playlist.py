@@ -3,6 +3,7 @@
 # Sample Python code for youtube.playlists.delete
 # See instructions for running these code samples locally:
 # https://developers.google.com/explorer-help/code-samples#python
+from flask import Flask, render_template, request 
 
 import os
 
@@ -14,6 +15,9 @@ import googleapiclient.errors
 import pandas
 
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+
+app = Flask(__name__, template_folder='templates')
+
 
 def main():
     # Disable OAuthlib's HTTPS verification when running locally.
@@ -141,8 +145,16 @@ def combine_playlist(Play_ID):
         # print(ChannelID_VID)
         playlist_channels_id = playlist_channels(Videos)
         #print(playlist_channels_id)
+        pdata = playlist_channels_id
         print(pandas.DataFrame(playlist_channels_id.items(), columns=['Channel', 'ID']))
         #search_playlist()
+
+        @app.route('/')
+        def dis_playlist():
+            return render_template('index.html', pdata=pdata)
+        app.run()
+
+
         channel_id = input("Channel ID To Move?:")
         if channel_id in ChannelID_VID.keys():
             #VID = ChannelID_VID[channel_id]
@@ -160,6 +172,5 @@ def playlist_channels(Video_Block):
         vidOCT = item['snippet']['videoOwnerChannelTitle']
         channel_ids_titles[vidOCT] = vidOCID
     return channel_ids_titles
-
 
 main()
