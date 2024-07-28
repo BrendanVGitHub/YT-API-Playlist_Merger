@@ -32,7 +32,7 @@ def main():
     # Get credentials and create an API client
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
         client_secrets_file, scopes)
-    credentials = flow.run_console()
+    credentials = flow.run_local_server(port=0)
     global youtube
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, credentials=credentials)
